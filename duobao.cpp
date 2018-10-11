@@ -161,3 +161,21 @@ private:
       account_index winners;
 };
 
+extern "C" {
+    void apply( uint64_t receiver, uint64_t code, uint64_t action ) {
+
+        duobao thiscontract(receiver);
+
+        if((code == N(eosio.token)) && (action == N(transfer))) {
+            execute_action(&thiscontract, &duobao::buy);
+            return;
+        }
+
+        if (code != receiver) return;
+
+        switch (action) {
+            EOSIO_API(duobao, (open))
+        };
+        eosio_exit(0);
+    }
+}
